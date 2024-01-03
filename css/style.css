@@ -9685,3 +9685,55 @@ textarea.form-control {
     font-size: 15px;
     color: #ffbd39;
   }
+
+/* Style for the moving effect */
+.skill{
+  background-color:#ffbd39;
+  margin: 10px;
+  padding: 20px;
+  display: flex;
+  color:#fff;
+  border-radius: 5px;
+  flex-shrink: 0;
+
+}
+
+.scroller {
+  position: relative; /* Added to allow absolute positioning of inner elements */
+  height: 100px; /* Set a fixed height */
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  -webkit-mask: linear-gradient(
+    90deg,
+    transparent,
+    white 20%,
+    white 80%,
+    transparent
+    );
+    mask: linear-gradient(
+    90deg,
+    transparent,
+    white 20%,
+    white 80%,
+    transparent
+    );
+}
+
+
+
+
+.scroller__inner {
+  display: flex;
+  position: absolute;
+  will-change: transform; /* Optimizes for animations */
+}
+
+.moving-left .scroller__inner {
+  left: 0;
+}
+
+.moving-right .scroller__inner {
+  right: 0;
+}
+
