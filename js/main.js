@@ -180,7 +180,7 @@ AOS.init({
           $('.number').each(function () {
             var $this = $(this),
               num = $this.data('number')
-            console.log(num)
+           
             $this.animateNumber(
               {
                 number: num,
@@ -352,4 +352,67 @@ AOS.init({
       // Initial check
       animateCounters();
   });
+  
+
+
+  let lastScrollTop = 700;
+  let leftScrollAmount = 0;
+  let rightScrollAmount = 0;
+  
+  window.addEventListener('scroll', () => {
+    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    let scrollDelta = currentScroll - lastScrollTop;
+    lastScrollTop = currentScroll;
+  
+    // Moving Left
+    const movingLeft = document.querySelector('.moving-left .scroller__inner');
+    if (movingLeft) { // Check if the element exists
+      leftScrollAmount -= scrollDelta; // Decrease or increase based on scroll direction
+      movingLeft.style.transform = `translateX(${leftScrollAmount}px)`;
+      repeatInfinite(movingLeft, leftScrollAmount, true);
+    }
+  
+    // Moving Right
+    const movingRight = document.querySelector('.moving-right .scroller__inner');
+    if (movingRight) { // Check if the element exists
+      rightScrollAmount += scrollDelta; // Increase or decrease based on scroll direction
+      movingRight.style.transform = `translateX(${rightScrollAmount}px)`;
+      repeatInfinite(movingRight, rightScrollAmount, false);
+    }
+  });
+  
+  function repeatInfinite(element, scrollAmount, isLeft) {
+    const skills = element.querySelectorAll('.skills');
+    if (skills.length > 0) { // Check if there are skills elements
+      const singleSetWidth = skills[0].offsetWidth;
+  
+      // Check if the entire set of skills has moved out of view
+      if (isLeft && scrollAmount <= -singleSetWidth) {
+        element.appendChild(skills[0]); // Move the first set of skills to the end
+        leftScrollAmount += singleSetWidth; // Adjust the scroll amount
+      } else if (!isLeft && scrollAmount >= singleSetWidth) {
+        element.insertBefore(skills[1], skills[0]); // Move the last set of skills to the beginning
+        rightScrollAmount -= singleSetWidth; // Adjust the scroll amount
+      }
+    } else {
+    
+    }
+  }
+  
+
+  const lenis = new Lenis()
+
+  lenis.on('scroll', (e) => {
+   
+  })
+  
+  function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+  }
+  
+  requestAnimationFrame(raf)
+
+
+
   
